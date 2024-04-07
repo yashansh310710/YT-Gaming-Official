@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YT Gaming Official</title>
+  <style>
+    body {
+      position: relative;
+      height: 200%;
+      margin: 0;
+      overflow: auto;
+    }
+    .video-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1; /* Ensure the video is behind the content */
+    }
+    .wrapper {
+      text-align: center;
+      padding: 20px;
+      z-index: 1;
+      background-color: transparent;
+    }
+    .content {
+      color: red; /* Normal red color */
+    }
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: red; /* Normal red color */
+    }
+    /* Increase size of links */
+    a {
+      font-size: 20px;
+      padding: 10px;
+      color: red; /* Normal red color */
+    }
+    /* Increase size of subscriber count */
+    #subscriberCount {
+      font-size: 36px; /* Increased font size */
+      font-weight: bold;
+      color: black; /* Black color */
+    }
+    /* Increase size of "Live Subscriber Count" text */
+    #liveSubsText {
+      font-size: 36px; /* Increased font size */
+    }
+  </style>
+</head>
+<body>
+  <video autoplay loop muted class="video-bg">
+    <source src="5873420-uhd_2160_3840_24fps.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <div class="wrapper">
+    <div class="content">
+      <h1>Welcome to Our YouTube Channel!</h1>
+      <h2>We create awesome content just for you!</h2>
+
+      <!-- Video Section 1 -->
+      <div>
+        <h1>Check out our latest video:</h1>
+        <h2>Watch this amazing video showcasing the best moments in Free Fire!</h2>
+        <video controls width="640" height="360">
+          <source src="Best-Free-Fire-Headshot-HD-Status-Video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Links to Video 1 -->
+      <div>
+        <a href="https://www.youtube.com/channel/UC953-zzrgwDwijxYHzFS4nQ" target="_blank">Visit Our YouTube Channel</a>
+        <br>
+        <a href="https://youtu.be/qkNzdm-l6FU?si=8kFWEJ4YmfqOz9z9" target="_blank">Watch Our Latest Video</a>
+      </div>
+
+      <!-- Video Section 2 -->
+      <div>
+        <h1>Check out our second video:</h1>
+        <h2>Experience the thrill of headshots in Free Fire with this action-packed video!</h2>
+        <video controls width="640" height="360">
+          <source src="best-song-headshot_shorts-_freefireshorts-_freefire-headshot-song_freefireshorts-edit720P_HD.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Links to Video 2 -->
+      <div>
+        <a href="https://youtube.com/shorts/c69oxWG1UNU?si=QMNtl99ja6wNj_0s" target="_blank">Watch Our Second Video</a>
+      </div>
+
+      <!-- Video Section 3 -->
+      <div>
+        <h1>Check out our third video:</h1>
+        <h2>Enjoy the adrenaline rush with this epic Free Fire status video!</h2>
+        <video controls width="640" height="360">
+          <source src="Free-Fire-4k-status-video-FreeFire-whatsapp-statue-Free-Fire-Attitude-status-slow-motion-video-short720P_HD.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- Links to Video 3 -->
+      <div>
+        <a href="https://youtu.be/I8_U1I7d6V8?si=dinrBJnx6RMrYekq" target="_blank">Watch Our Third Video</a>
+      </div>
+
+      <!-- Subscriber Count Section -->
+      <div>
+        <h1 id="liveSubsText">Live Subscriber Count:</h1>
+        <p id="subscriberCount">Fetching subscriber count...</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer Section -->
+  <footer class="footer">
+    <h1>Contact us: yashansh310710@gmail.com | Phone: +91 9839474777</h1>
+  </footer>
+
+  <!-- JavaScript code -->
+  <script>
+    // Function to fetch subscriber count from YouTube Data API
+    function fetchSubscriberCount() {
+      var apiKey = 'AIzaSyBzNIxmG8WAxMQLxqPXqGhXf1_-_j6S-bk'; // Replace with your actual API key
+      var channelId = 'UC953-zzrgwDwijxYHzFS4nQ'; // Replace with your actual channel ID
+      var apiUrl = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + channelId + '&key=' + apiKey;
+
+      fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+          var subscriberCount = parseInt(data.items[0].statistics.subscriberCount);
+          document.getElementById('subscriberCount').textContent = 'Subscriber count: ' + subscriberCount.toLocaleString();
+        })
+        .catch(error => {
+          console.error('Error fetching subscriber count:', error);
+          document.getElementById('subscriberCount').textContent = 'Failed to fetch subscriber count';
+        });
+    }
+
+    // Fetch subscriber count when the page loads
+    window.onload = fetchSubscriberCount;
+  </script>
+</body>
+</html>
+
+
