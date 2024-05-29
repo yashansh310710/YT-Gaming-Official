@@ -48,6 +48,28 @@
     #liveSubsText {
       font-size: 36px; /* Increased font size */
     }
+    .comments-section {
+      margin-top: 50px;
+      text-align: left;
+      width: 60%;
+      margin: 50px auto;
+    }
+    .comment-box {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .comment {
+      border-bottom: 1px solid #ddd;
+      padding: 10px 0;
+    }
+    .comment h4 {
+      margin: 0;
+    }
+    .comment p {
+      margin: 5px 0 0 0;
+    }
   </style>
 </head>
 <body>
@@ -143,42 +165,74 @@
         <h1 id="liveSubsText">Live Subscriber Count:</h1>
         <p id="subscriberCount">Fetching subscriber count...</p>
       </div>
-    </div>
-  </div>
 
-  <!-- Footer Section -->
-  <footer class="footer">
-    <h1>Contact us: yashansh310710@gmail.com | Phone: +91 9839474777</h1>
-  </footer>
+      <!-- Comment Section -->
+<div class="comments-section">
+  <h2>Comments</h2>
+  <input type="text" id="name-box" class="comment-box" placeholder="Your name...">
+  <textarea id="comment-box" class="comment-box" placeholder="Write a comment..."></textarea>
+  <button onclick="postComment()">Post Comment</button>
+  <div id="comments-container"></div>
+</div>
 
-  <!-- JavaScript code -->
-  <script>
-    // Function to fetch subscriber count from YouTube Data API
-    function fetchSubscriberCount() {
-      var apiKey = 'AIzaSyBCaCY1Dl_dTWvwFETcjTH1aYEfe699IAk'; // Replace with your actual API key
-      var channelId = 'UC953-zzrgwDwijxYHzFS4nQ'; // Replace with your actual channel ID
-      var apiUrl = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + channelId + '&key=' + apiKey;
+<!-- JavaScript code -->
+<script>
+  // Function to fetch subscriber count from YouTube Data API
+  function fetchSubscriberCount() {
+    var apiKey = 'AIzaSyBCaCY1Dl_dTWvwFETcjTH1aYEfe699IAk'; // 
+    var channelId = 'UC953-zzrgwDwijxYHzFS4nQ';
+    var apiUrl = 'https://www.googleapis.com/youtube/v3/channels?part=statistics&id=' + channelId + '&key=' + apiKey;
 
-      fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-          var subscriberCount = parseInt(data.items[0].statistics.subscriberCount);
-          var subscriberCountElements = document.querySelectorAll('#subscriberCount');
-          subscriberCountElements.forEach(element => {
-            element.textContent = 'Subscriber count: ' + subscriberCount.toLocaleString();
-          });
-        })
-        .catch(error => {
-          console.error('Error fetching subscriber count:', error);
-          var subscriberCountElements = document.querySelectorAll('#subscriberCount');
-          subscriberCountElements.forEach(element => {
-            element.textContent = 'Failed to fetch subscriber count';
-          });
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        var subscriberCount = parseInt(data.items[0].statistics.subscriberCount);
+        var subscriberCountElements = document.querySelectorAll('#subscriberCount');
+        subscriberCountElements.forEach(element => {
+          element.textContent = 'Subscriber count: ' + subscriberCount.toLocaleString();
         });
+      })
+      .catch(error => {
+        console.error('Error fetching subscriber count:', error);
+        var subscriberCountElements = document.querySelectorAll('#subscriberCount');
+        subscriberCountElements.forEach(element => {
+          element.textContent = 'Failed to fetch subscriber count';
+        });
+      });
+  }
+
+  // Function to post a comment
+  function postComment() {
+    var nameBox = document.getElementById('name-box');
+    var commentBox = document.getElementById('comment-box');
+    var name = nameBox.value.trim();
+    var commentText = commentBox.value.trim();
+
+    if (name === '' || commentText === '') {
+      alert('Please enter both your name and comment.');
+      return;
     }
 
-    // Fetch subscriber count when the page loads
-    window.onload = fetchSubscriberCount;
-  </script>
-</body>
-</html>
+    var commentsContainer = document.getElementById('comments-container');
+    var commentElement = document.createElement('div');
+    commentElement.classList.add('comment');
+    commentElement.innerHTML = '<h4>' + name + '</h4><p>' + commentText + '</p>';
+
+    // Create a delete button for the comment
+    var deleteButton = document.createElement('button');
+    deleteButton.textContent = 'Delete';
+    deleteButton.onclick = function() {
+      commentsContainer.removeChild(commentElement);
+    };
+    commentElement.appendChild(deleteButton);
+
+    commentsContainer.appendChild(commentElement);
+
+    // Clear input fields
+    nameBox.value = '';
+    commentBox.value = '';
+  }
+
+  // Fetch subscriber count when the page loads
+  window.onload = fetchSubscriberCount;
+</script>
