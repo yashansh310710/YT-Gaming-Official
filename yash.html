@@ -61,6 +61,12 @@
       <h1>Welcome to Our YouTube Channel!</h1>
       <h2>We create awesome content just for you!</h2>
 
+      <!-- Subscriber Count Section below Welcome Text -->
+      <div>
+        <h1 id="liveSubsText">Live Subscriber Count:</h1>
+        <p id="subscriberCount">Fetching subscriber count...</p>
+      </div>
+
       <!-- Video Section 1 -->
       <div>
         <h1>Check out our latest video:</h1>
@@ -107,7 +113,7 @@
       <div>
         <a href="https://youtu.be/I8_U1I7d6V8?si=dinrBJnx6RMrYekq" target="_blank">Watch Our Third Video</a>
       </div>
-      
+
       <!-- Video Section 4 -->
       <div>
         <h1>Check out our Fourth video:</h1>
@@ -131,8 +137,8 @@
         <br>
         <a href="your-fifth-video-link" target="_blank">Watch this video on YouTube</a>
       </div>
-      
-      <!-- Subscriber Count Section -->
+
+      <!-- Subscriber Count Section at Bottom -->
       <div>
         <h1 id="liveSubsText">Live Subscriber Count:</h1>
         <p id="subscriberCount">Fetching subscriber count...</p>
@@ -157,16 +163,22 @@
         .then(response => response.json())
         .then(data => {
           var subscriberCount = parseInt(data.items[0].statistics.subscriberCount);
-          document.getElementById('subscriberCount').textContent = 'Subscriber count: ' + subscriberCount.toLocaleString();
+          var subscriberCountElements = document.querySelectorAll('#subscriberCount');
+          subscriberCountElements.forEach(element => {
+            element.textContent = 'Subscriber count: ' + subscriberCount.toLocaleString();
+          });
         })
         .catch(error => {
           console.error('Error fetching subscriber count:', error);
-          document.getElementById('subscriberCount').textContent = 'Failed to fetch subscriber count';
+          var subscriberCountElements = document.querySelectorAll('#subscriberCount');
+          subscriberCountElements.forEach(element => {
+            element.textContent = 'Failed to fetch subscriber count';
+          });
         });
     }
 
     // Fetch subscriber count when the page loads
- 
-
-
-
+    window.onload = fetchSubscriberCount;
+  </script>
+</body>
+</html>
